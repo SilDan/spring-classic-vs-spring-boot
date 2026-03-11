@@ -1,11 +1,16 @@
 # Spring Classic vs Spring Boot
 
 Repository:
+
 [git@github.com](mailto:git@github.com):SilDan/spring-classic-vs-spring-boot.git
 
-This repository contains two implementations of the same simple **User REST API** to demonstrate the difference between **classic Spring MVC configuration** and **Spring Boot auto-configuration**.
+This repository contains several implementations of the same simple **User REST API** to demonstrate the evolution of Java web development:
 
-The goal is to understand what Spring Boot actually automates.
+1. **Pure Java Servlets**
+2. **Classic Spring MVC configuration**
+3. **Spring Boot auto-configuration**
+
+The goal is to understand what Spring and Spring Boot actually automate on top of the Servlet API.
 
 ---
 
@@ -13,6 +18,13 @@ The goal is to understand what Spring Boot actually automates.
 
 ```
 spring-classic-vs-spring-boot
+│
+├── user-api-http-servlet
+│   Pure Servlet implementation
+│   - HttpServlet based
+│   - manual request handling
+│   - deployed as WAR
+│   - requires external servlet container
 │
 ├── user-api-spring-classic
 │   Traditional Spring MVC project
@@ -27,7 +39,7 @@ spring-classic-vs-spring-boot
     - executable JAR
 ```
 
-Both projects implement the same REST API so that the differences in configuration and setup become clear.
+All projects implement the same REST API so that the differences in configuration, infrastructure, and setup become clear.
 
 ---
 
@@ -68,7 +80,29 @@ Example request body:
 
 ---
 
-# Project 1: Classic Spring MVC
+# Project 1: Pure Servlet API
+
+Location:
+
+```
+user-api-http-servlet
+```
+
+Characteristics:
+
+* Java Servlet API
+* `HttpServlet` based implementation
+* manual HTTP request handling
+* WAR packaging
+* requires a servlet container (Tomcat / Jetty / etc.)
+
+Purpose:
+
+This project shows how Java web applications work **without frameworks**. It helps understanding what frameworks like Spring MVC build on top of.
+
+---
+
+# Project 2: Classic Spring MVC
 
 Location:
 
@@ -92,9 +126,11 @@ Main components:
 * Service
 * Repository
 
+Spring MVC internally still uses the **Servlet API**, but abstracts much of the boilerplate.
+
 ---
 
-# Project 2: Spring Boot
+# Project 3: Spring Boot
 
 Location:
 
@@ -106,19 +142,22 @@ Characteristics:
 
 * minimal configuration
 * embedded Tomcat server
-* executable application with main()
+* executable application with `main()`
 * auto configuration
+* no manual servlet container setup required
+
+Spring Boot automatically configures Spring MVC and the embedded server.
 
 ---
 
 # Architecture
 
-Both projects follow a layered architecture:
+All implementations follow a layered architecture:
 
 ```
 Client
    ↓
-Controller
+Controller / Servlet
    ↓
 Service
    ↓
@@ -127,7 +166,15 @@ Repository
 Model
 ```
 
-The web layer uses **Spring MVC**.
+The web layer evolves across the projects:
+
+```
+Servlet API
+   ↓
+Spring MVC
+   ↓
+Spring Boot
+```
 
 ---
 
@@ -135,6 +182,7 @@ The web layer uses **Spring MVC**.
 
 * Java 17
 * Maven
+* Servlet API
 * Spring Framework
 * Spring MVC
 * Spring Boot
@@ -145,10 +193,13 @@ The web layer uses **Spring MVC**.
 
 This project demonstrates:
 
+* the Java **Servlet API**
+* how HTTP requests are handled in Java
 * Spring IoC container
 * Dependency Injection
 * Spring MVC request handling
 * the difference between manual configuration and Spring Boot auto-configuration
+* what Spring Boot automates
 
 ---
 
